@@ -33,10 +33,15 @@ def strip_line_comments(line):
 def main():
     registers = [None] * num_registers
     for line in fileinput.input():
-        inline_defs = regex_inline_alias.findall(strip_line_comments(line))
+        line_stripped = strip_line_comments(line)
+        inline_defs = regex_inline_alias.findall(line_stripped)
         for idef in inline_defs:
             alias, reg = idef.split(':')
-            line = line.replace(idef, alias, 1)
+            if idef == line_stripped:
+                # definition only, delete the line
+                line = ''
+            else:
+                line = line.replace(idef, alias, 1)
             if alias in registers:
                 print(str_unreq.format(alias))
                 registers[registers.index(alias)] = None
