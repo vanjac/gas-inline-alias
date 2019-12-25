@@ -51,7 +51,7 @@ def main():
                     print(str_unreq.format(registers[regnum]))
                 registers[regnum] = alias
             print(str_req.format(alias, reg))
-        if regex_unreq_all.match(line):
+        if regex_unreq_all.fullmatch(line_stripped):
             for alias in registers:
                 if alias is not None:
                     print(str_unreq.format(alias))
